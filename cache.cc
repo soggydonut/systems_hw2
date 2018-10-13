@@ -5,8 +5,10 @@ using namespace std;
 
 struct Cache::Impl {
 public:
-    unordered_map<string, void*> my_map;
+    // Unordered map, which is the data structure we are currently using for our cache (this may change? :0)
+    unordered_map<std::string, void*> my_map;
 
+    // Struct members, mirroring those in the Cache class
     index_type maxmem_;
     evictor_type evictor_;
     hash_func hasher_;
@@ -19,19 +21,25 @@ public:
 
     ~Impl() = default;
 
+    // Implements Cache::set
+    // Sets my_map[key] = val
     void set(key_type key, val_type val, index_type size) {
-    	val_type val_ = new val_type;
-    	*val_ = *(val);
-       my_map[key] = val_;
+        string key_ = key;
+        void *val_ = new val_type(val);
+        my_map[key_] = val_;
     }
+    // Implements Cache::get
+    // Returns the value at my_map[key]
     val_type get(key_type key, index_type& val_size) const {
-    	val_type val_ = new val_type;
-    	*val_ = *(my_map[key]);
-    	return val_;
+        string key_ = key;
+        auto val = my_map.at(key_);
+        return val;
     }
+    // Deletes value (and key) at my_map[key]
     void del(key_type key) {
         my_map.erase(key);
     }
+    // Returns the total memory used
     index_type space_used() const {
         return memused_;
     }
