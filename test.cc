@@ -10,6 +10,13 @@ Cache::val_type val = "bar";
 Cache::val_type val2 = "car";
 Cache::index_type size = 3;
 
+// Our Hash Function, implemented as a functor by overloading the operator ().
+// The algorithm is:
+// - Split the string key into an array of characters
+// - Iterate over the array and take the product of the prime numbers that correspond to each ASCII char
+//    (e.g. 'C' is 67th on the ASCII table, and the 67th prime is 317)
+// Once we have the product, return it as the bucket number to store value associated with the key
+// Since any given integer is a product of primes, the only K-V pairs sharing the same bucket would be those whose keys are permutations of each other
 struct MyHashFunc {
     // An array of the first 255 primes
     const uint32_t PRIME_NUMBERS[255] = {  2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89,
