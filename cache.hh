@@ -1,3 +1,4 @@
+// Laura Yoshida & Lucas Yong
 /*
  * Interface for a generic cache object.
  * Data is given as blobs (void *) of a given size,
@@ -26,7 +27,6 @@ class Cache {
   using evictor_type = std::function<uint32_t(void)>;
 
   // Create a new cache object with a given maximum memory capacity.
-  // *** HOW TO USE/INIT ***
   Cache(index_type maxmem,
         evictor_type evictor = [](){ return 0; },
         hash_func hasher = std::hash<std::string>());
@@ -34,7 +34,6 @@ class Cache {
   ~Cache();
 
   // Disallow cache copies, to simplify memory management.
-  // *** ASK EITAN ***
   Cache(const Cache&) = delete;
   Cache& operator=(const Cache&) = delete;
 
