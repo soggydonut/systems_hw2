@@ -242,7 +242,7 @@ int main() {
     test_get_after_eviction(); // PASS
     test_too_big(); // FAIL
     test_delete(); // PASS
-    test_del_nonexistent() // PASS
+    test_del_nonexistent(); // PASS
     test_del_evicted(); //PASS
     check_space_used(); // PASS
     return 0;

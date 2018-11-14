@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include <iostream>
 #include <vector>
+#include <memory>
 
 using namespace std;
 
@@ -31,7 +32,6 @@ public:
 
     // Implements Cache::set
     void set(key_type key, val_type val, index_type size) {
-        // Needs work!! implement FIFO evictor
         string key_ = key;
         void *val_ = const_cast<void*>(val);
         memused_ += size;
