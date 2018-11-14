@@ -98,7 +98,7 @@ string getStringFromBlob(Cache::val_type blob) {
 /* == Cache::get  Tests== */
 // Check that we can insert a string value and get back the same value and size.
 void test_insert_string() {
-    Cache c(100, [](){ return 0; }, MyHashFunc());
+    Cache c(100, MyHashFunc());
     Cache::val_type blob = getBlobFromString(&strVal);
     c.set(key, blob, sizeof(strVal));
     Cache::index_type get_size;
@@ -110,7 +110,7 @@ void test_insert_string() {
 // Check that we can insert an integer value and get back the same value and size.
 // *** changed to num instead of char ***
 void test_insert_num() {
-    Cache c(100, [](){ return 0; }, MyHashFunc());
+    Cache c(100, MyHashFunc());
     Cache::val_type blob = getBlobFromNum(&numVal);
     c.set(key, blob, sizeof(numVal));
     Cache::index_type get_size;
@@ -121,7 +121,7 @@ void test_insert_num() {
 
 // Try to get a nonexistent value from the Cache. get() should return nullptr.
 void test_get_nonexistent() {
-    Cache c(100, [](){ return 0; }, MyHashFunc());
+    Cache c(100, MyHashFunc());
     Cache::index_type get_size;
     Cache::val_type get_val = c.get(key, get_size);
     assert(get_val==nullptr);
@@ -129,7 +129,7 @@ void test_get_nonexistent() {
 
 // Check that when you set a K-V pair with an existing key (one that's already in the Cache), you get back the latest value that was set.
 void test_get_modified() {
-    Cache c(100, [](){ return 0; }, MyHashFunc());
+    Cache c(100, MyHashFunc());
     Cache::val_type blob1 = getBlobFromNum(&numVal);
     Cache::val_type blob2 = getBlobFromNum(&numVal2);
     c.set(key, blob1, sizeof(numVal));
@@ -142,7 +142,7 @@ void test_get_modified() {
 
 // Check that you can get some value after setting it and another one after it.
 void test_get_after_set() {
-    Cache c(100, [](){ return 0; }, MyHashFunc());
+    Cache c(100, MyHashFunc());
     Cache::val_type blob1 = getBlobFromNum(&numVal);
     Cache::val_type blob2 = getBlobFromNum(&numVal2);
     c.set(key, blob1, sizeof(numVal));
@@ -155,7 +155,7 @@ void test_get_after_set() {
 
 // Check that you cannot get a value that has already been evicted.
 void test_get_evicted() {
-    Cache c(5, [](){ return 0; }, MyHashFunc());
+    Cache c(5, MyHashFunc());
     Cache::val_type blob1 = getBlobFromNum(&numVal);
     Cache::val_type blob2 = getBlobFromNum(&numVal2);
     c.set(key, blob1, sizeof(numVal));
@@ -167,7 +167,7 @@ void test_get_evicted() {
 
 // Check that you can get a value that triggered an eviction.
 void test_get_after_eviction() {
-    Cache c(5, [](){ return 0; }, MyHashFunc());
+    Cache c(5, MyHashFunc());
     Cache::val_type blob1 = getBlobFromNum(&numVal);
     Cache::val_type blob2 = getBlobFromNum(&numVal2);
     c.set(key, blob1, sizeof(numVal));
@@ -180,7 +180,7 @@ void test_get_after_eviction() {
 /* == Cache::set  Tests== */
 // Check that you can't set a value that is larger than the Cache's maxmem.
 void test_too_big() {
-    Cache c(1, [](){ return 0; }, MyHashFunc());
+    Cache c(1, MyHashFunc());
     Cache::val_type blob = getBlobFromNum(&numVal);
     c.set(key, blob, sizeof(numVal));
     Cache::index_type get_size;
@@ -191,7 +191,7 @@ void test_too_big() {
 /* == Cache::del  Tests== */
 // Check that you can't get a value that you have deleted.
 void test_delete() {
-    Cache c(100, [](){ return 0; }, MyHashFunc());
+    Cache c(100, MyHashFunc());
     Cache::val_type blob1 = getBlobFromNum(&numVal);
     c.set(key, blob1, sizeof(numVal));
     c.del(key);
@@ -202,13 +202,13 @@ void test_delete() {
 
 // Check that deleting a nonexistent key does nothing.
 void test_del_nonexistent() {
-    Cache c(100, [](){ return 0; }, MyHashFunc());
+    Cache c(100, MyHashFunc());
     c.del(key);
 }
 
 // Check that deleting an evicted key does nothing.
 void test_del_evicted() {
-    Cache c(5, [](){ return 0; }, MyHashFunc());
+    Cache c(5, MyHashFunc());
     Cache::val_type blob1 = getBlobFromNum(&numVal);
     Cache::val_type blob2 = getBlobFromNum(&numVal2);
     c.set(key, blob1, sizeof(numVal));
@@ -219,7 +219,7 @@ void test_del_evicted() {
 /* == Cache::space_used Tests== */
 // Check that the space used as reported by the Cache is consistent with the actual space used.
 void check_space_used() {
-    Cache c(100, [](){ return 0; }, MyHashFunc());
+    Cache c(100, MyHashFunc());
     Cache::val_type blob1 = getBlobFromNum(&numVal);
     Cache::val_type blob2 = getBlobFromNum(&numVal2);
     Cache::index_type totalSpace = 0;
