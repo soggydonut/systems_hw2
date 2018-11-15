@@ -71,11 +71,9 @@ void handle_get_memsize(http_request request) {
 
 void handle_get(http_request request) {
    auto response = http_response();
-   // Identify whether it is a GET request for key 'k' or memsize.
    string path = request.request_uri().path();
    auto requestKeywords = splittedString(path, '/');
    if (requestKeywords.empty()) {
-      // *** Check that error HTTP_CLIENT_ERROR_BAD_REQUEST is appropriate
       response.set_status_code(HTTP_CLIENT_ERROR_BAD_REQUEST);
       response.set_body("Empty GET Request: Please look up a key in the cache or the memsize.");
       request.reply(response);
@@ -84,7 +82,6 @@ void handle_get(http_request request) {
    string GETRequestType = requestKeywords[0];
    if (GETRequestType == "key") {
       if (requestKeywords.size() < 2) {
-         // *** Check that error HTTP_CLIENT_ERROR_BAD_REQUEST is appropriate
          response.set_status_code(HTTP_CLIENT_ERROR_BAD_REQUEST);
          response.set_body("Invalid Key: Your key cannot be an empty string.");
          request.reply(response);
@@ -95,7 +92,6 @@ void handle_get(http_request request) {
    } else if (GETRequestType == "memsize") {
       handle_get_memsize(request);
    } else {
-      // *** Check that error HTTP_CLIENT_ERROR_BAD_REQUEST is appropriate
       response.set_status_code(HTTP_CLIENT_ERROR_BAD_REQUEST);
       response.set_body("Invalid GET Request: Please look up a key in the cache or the memsize.");
       request.reply(response);
@@ -108,7 +104,6 @@ void handle_put(http_request request) {
    string path = request.request_uri().path();
    auto requestKeywords = splittedString(path, '/');
    if (requestKeywords.empty()) {
-      // *** Check that error HTTP_CLIENT_ERROR_BAD_REQUEST is appropriate
       response.set_status_code(HTTP_CLIENT_ERROR_BAD_REQUEST);
       response.set_body("Empty PUT Request: Please set a value with the path /key/k/v.");
       request.reply(response);
@@ -130,7 +125,6 @@ void handle_put(http_request request) {
          request.reply(response);
       }
    } else {
-      // *** Check that error HTTP_CLIENT_ERROR_BAD_REQUEST is appropriate
       response.set_status_code(HTTP_CLIENT_ERROR_BAD_REQUEST);
       response.set_body("Invalid PUT Request: Please set a value with the path /key/k/v.");
       request.reply(response);
@@ -142,7 +136,6 @@ void handle_del(http_request request) {
    string path = request.request_uri().path();
    auto requestKeywords = splittedString(path, '/');
    if (requestKeywords.empty()) {
-      // *** Check that error HTTP_CLIENT_ERROR_BAD_REQUEST is appropriate
       response.set_status_code(HTTP_CLIENT_ERROR_BAD_REQUEST);
       response.set_body("Empty DELETE Request: Please delete a value with the path /key/k.");
       request.reply(response);
@@ -163,7 +156,6 @@ void handle_del(http_request request) {
          request.reply(response);
       }   
    } else {
-      // *** Check that error HTTP_CLIENT_ERROR_BAD_REQUEST is appropriate
       response.set_status_code(HTTP_CLIENT_ERROR_BAD_REQUEST);
       response.set_body("Invalid DELETE Request: Please set a value with the path /key/k.");
       request.reply(response);
@@ -187,7 +179,6 @@ void handle_post(http_request request) {
    string path = request.request_uri().path();
    auto requestKeywords = splittedString(path, '/');
    if (requestKeywords.empty()) {
-      // *** Check that error HTTP_CLIENT_ERROR_BAD_REQUEST is appropriate
       response.set_status_code(HTTP_CLIENT_ERROR_BAD_REQUEST);
       response.set_body("Empty POST Request: Please shut down the server with /shutdown.");
       request.reply(response);
@@ -195,15 +186,13 @@ void handle_post(http_request request) {
    }
    string POSTRequestType = requestKeywords[0];
    if (POSTRequestType == "shutdown" && requestKeywords.size() == 1) {
-      // FREE CACHE RESOURCES (once Cache is ready!!)
       response.set_status_code(HTTP_SUCCESS);
-      delete serverCache;
       response.set_body("Goodbye!");
       request.reply(response);
+      delete serverCache;
       listener.close().wait();
       
    } else {
-      // *** Check that error HTTP_CLIENT_ERROR_BAD_REQUEST is appropriate
       response.set_status_code(HTTP_CLIENT_ERROR_BAD_REQUEST);
       response.set_body("Invalid POST Request:   Please shut down the server with /shutdown.");
       request.reply(response);
@@ -217,7 +206,6 @@ int main(int argc, char **argv) {
    while ((opt = getopt(argc, argv, "m:t:")) != -1) {
        switch (opt) {
          case 'm':
-          // todo: fix this!
             maxmem = atoi(optarg);
             break;
          case 't':
@@ -228,35 +216,11 @@ int main(int argc, char **argv) {
             exit(EXIT_FAILURE);
        }
    }
-   // check that everything was set properly
    std::cout << "maxmem: " << maxmem << ", portnum: " << portnum << "\n";
 
    serverCache = new Cache(maxmem);
-   const string val = "yes!!!!!!";
-   auto blob = static_cast<Cache::val_type>(&val);
-   serverCache->set("hello", blob, sizeof(val));
-   Cache::index_type size;
-   auto v = serverCache->get("hello", size);
-   cout << "test val is: " << *(static_cast<const string*>(v)) << endl;
 
-   serverCache->set("hello1", blob, sizeof(val));
-   v = serverCache->get("hello1", size);
-   cout << "1test val is: " << *(static_cast<const string*>(v)) << endl;
-
-   serverCache->set("hello2", blob, sizeof(val));
-   v = serverCache->get("hello2", size);
-   cout << "2test val is: " << *(static_cast<const string*>(v)) << endl;
-
-   serverCache->set("hello3", blob, sizeof(val));
-   v = serverCache->get("hello3", size);
-   cout << "3test val is: " << *(static_cast<const string*>(v)) << endl;
-
-   serverCache->set("hello4", blob, sizeof(val));
-   v = serverCache->get("hello4", size);
-   cout << "4test val is: " << *(static_cast<const string*>(v)) << endl;
-
-
-
+   // Setting up the listener
    ostringstream oss;
    oss << "http://localhost:" << portnum;
    string uri = oss.str();
