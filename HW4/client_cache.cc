@@ -67,10 +67,10 @@ public:
         if (status_code == HTTP_SUCCESS) {
             auto json = response.extract_json().get();
             string jsonStr = json["value"].as_string();
-            val_size = sizeof(jsonStr)+1;
+            val_size = sizeof(jsonStr);
 
-            val_type copy = new char[val_size];
-            memcpy((void*)copy, &jsonStr, val_size);
+            val_type copy = new char[sizeof(jsonStr)+1];
+            memcpy((void*)copy, jsonStr.c_str(), sizeof(jsonStr)+1);
             return copy;
         } else {
             string message = response.extract_string().get();
@@ -113,9 +113,7 @@ public:
 Cache::Cache(index_type maxmem, hash_func hasher) 
     : pImpl_(new Impl(maxmem,hasher)){}
 
-Cache::~Cache(){
-    // we don't need anything here because pimpl is a unique_ptr
-}
+Cache::~Cache(){}
 
 // Add a <key, value> pair to the cache.
 // If key already exists, it will overwrite the old value.
@@ -141,15 +139,4 @@ int Cache::del(key_type key){
 // Compute the total amount of memory used up by all cache values (not keys)
 Cache::index_type Cache::space_used() const {
     return pImpl_->space_used();
-}
-
-int main() {
-    Cache c(100);
-    string myval = "value";
-    c.set("key", &myval, sizeof(myval));
-    Cache::index_type size;
-    auto ptr = static_cast<const string*>(c.get("key", size));
-    cout << "Val is: " << *ptr << endl;
-    cout << "memused: " << c.space_used() << endl;
-    return 0;
 }

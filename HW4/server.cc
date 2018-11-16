@@ -52,7 +52,6 @@ void handle_get_key(http_request request, Cache::key_type key) {
    } else {
       const string *strValuePtr = static_cast<const string*>(value);
       json::value obj;
-      cout << "GETVAL: " << *strValuePtr << endl;
       obj["key"] = json::value::string(key);
       obj["value"] = json::value::string(*strValuePtr);
       response.set_status_code(HTTP_SUCCESS);
@@ -216,7 +215,7 @@ int main(int argc, char **argv) {
             exit(EXIT_FAILURE);
        }
    }
-   std::cout << "maxmem: " << maxmem << ", portnum: " << portnum << "\n";
+   cout << "maxmem: " << maxmem << ", portnum: " << portnum << endl;
 
    serverCache = new Cache(maxmem);
 
