@@ -38,14 +38,15 @@ Currently, we do not support the client and server running on different machines
 
 ### 'Client Terminal':
 #### To compile:
-```g++ -g -O3 -Wextra -pedantic -Wall --std=c++14 -o client client_cache.cc test.cc -lboost_system -lcrypto -lssl -lcpprest```
+```g++ -g -O3 -Wextra -pedantic -Wall --std=c++14 -o client client_cache.cc client_test.cc -lboost_system -lcrypto -lssl -lcpprest```
 #### To run:
 ```./client```
 
 ### Tests
 
+
 ### Problems/Bugs
 As of now, there is an issue with our Cache where Cache::get _sometimes_ doesn't return the correct value for a partciular key. We're not sure why, but we hope to figure this out soon!
 
-###Acknowledgements
+### Acknowledgements
 We would like to thank Jillian James & Marika Swanberg for allowing us to use their Cache code (from HW4 onwards).
