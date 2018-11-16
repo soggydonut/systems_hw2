@@ -1,4 +1,5 @@
-# CSCI389 Cache Project ### by Laura Yoshida & Lucas Yong
+# CSCI389 Cache Project
+### by Laura Yoshida & Lucas Yong
 
 ## Description
 This project was undertaken for the "CSCI389 - Computer Systems" class at Reed College in the Fall 2018 semester, in which we write a look-aside cache with key-value storage, and progressively add capabilities along the way.
