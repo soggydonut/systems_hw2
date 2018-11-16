@@ -37,10 +37,10 @@ Currently, we do not support the client and server running on different machines
 ```./server -m maxmem -t portnum```
 
 ### 'Client Terminal':
-#### To compile
+#### To compile:
 ```g++ -g -O3 -Wextra -pedantic -Wall --std=c++14 -o client client_cache.cc test.cc -lboost_system -lcrypto -lssl -lcpprest```
 #### To run:
-```./client
+```./client```
 
 ### Tests
 
