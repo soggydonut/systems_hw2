@@ -27,4 +27,16 @@ Implemented FIFO in cache::set.
 For HW3, we developed unit tests and ran them on our code as well as code from three other groups. Test results were uploaded to Moodle.
 
 ## HW4
-For this part, we... (TBC)
+In HW4 we modified the cache so that it could be accessed using RESTful API over a network. To support this functionality we used [C++ REST SDK](https://github.com/Microsoft/cpprestsdk).
+Currently, we do not support the client and server running on different machines. To run our code for HW4 you will need to test it in two separate terminals as follows:
+
+### 'Server Terminal':
+```g++ -g -O3 -Wextra -pedantic -Wall --std=c++14 -o server server_cache.cc server.cc -lboost_system -lcrypto -lssl -lcpprest```
+
+### 'Client Terminal':
+```g++ -g -O3 -Wextra -pedantic -Wall --std=c++14 -o client client_cache.cc test.cc -lboost_system -lcrypto -lssl -lcpprest```
+
+### Tests
+
+### Problems/Bugs
+As of now, there is an issue with our Cache where Cache::get _sometimes_ doesn't return the correct value for a partciular key. We're not sure why, but we hope to figure this out soon!
