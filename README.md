@@ -1,5 +1,4 @@
-# CSCI389 Cache Project
-### by Laura Yoshida & Lucas Yong
+# CSCI389 Cache Project ### by Laura Yoshida & Lucas Yong
 
 ## Description
 This project was undertaken for the "CSCI389 - Computer Systems" class at Reed College in the Fall 2018 semester, in which we write a look-aside cache with key-value storage, and progressively add capabilities along the way.
@@ -27,7 +26,7 @@ Implemented FIFO in cache::set.
 For HW3, we developed unit tests and ran them on our code as well as code from three other groups. Test results were uploaded to Moodle.
 
 ## HW4
-In HW4 we modified the cache so that it could be accessed using RESTful API over a network. To support this functionality we used [C++ REST SDK](https://github.com/Microsoft/cpprestsdk).
+In HW4 we modified the cache so that it could be accessed using RESTful API over a network. To support this functionality we used [C++ REST SDK](https://github.com/Microsoft/cpprestsdk) (make sure to install this and run it with the appropriate linkers!).
 Currently, we do not support the client and server running on different machines. To run our code for HW4 you will need to test it in two separate terminals as follows:
 
 ### 'Server Terminal':
