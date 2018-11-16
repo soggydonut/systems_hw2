@@ -43,10 +43,11 @@ Currently, we do not support the client and server running on different machines
 ```./client```
 
 ### Tests
+We ran similar tests to the one in HW3, but updated to suit the requirements of our client cache (especially the need to free the const char* pointer returned by Cache::get).
 
 
 ### Problems/Bugs
-As of now, there is an issue with our Cache where Cache::get _sometimes_ doesn't return the correct value for a partciular key. We're not sure why, but we hope to figure this out soon!
+As of now, there is an issue with our Cache where Cache::get _sometimes_ doesn't return the correct value for a particular key. We're not sure why, but we hope to figure this out soon!
 
 ### Acknowledgements
 We would like to thank Jillian James & Marika Swanberg for allowing us to use their Cache code (from HW4 onwards).
