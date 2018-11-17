@@ -43,11 +43,8 @@ Currently, we do not support the client and server running on different machines
 ```./client```
 
 ### Tests
-We ran similar tests to the one in HW3, but updated to suit the requirements of our client cache (especially the need to free the const char* pointer returned by Cache::get).
-
-
-### Problems/Bugs
-As of now, there is an issue with our Cache where Cache::get _sometimes_ doesn't return the correct value for a particular key. We're not sure why, but we hope to figure this out soon!
+We ran similar tests to the one in HW3, but updated to suit the requirements of our client cache (especially the need to free the const char* pointer returned by Cache::get). One of the issues we faced is that we realised that the tests from HW3, which mostly made use of unsigned integer values, would not work because RESTful API and JSON only work with strings. As such, we had to make these changes to our original testing code.
+Currently client_cache shuts down the cache in the Impl destructor, and we are not sure how to reboot the server in the constructor. As such, each test can only be run once (if not only one will pass). This is not ideal, but we hope this will be fixed soon!
 
 ### Acknowledgements
 We would like to thank Jillian James & Marika Swanberg for allowing us to use their Cache code (from HW4 onwards).
