@@ -50,10 +50,11 @@ void handle_get_key(http_request request, Cache::key_type key) {
       response.set_body("Invalid GET Request: The key you looked up does not return a value.");
       request.reply(response);
    } else {
-      const string *strValuePtr = static_cast<const string*>(value);
+      const char *strValuePtr = static_cast<const char*>(value);
+      string strValue = strValuePtr;
       json::value obj;
       obj["key"] = json::value::string(key);
-      obj["value"] = json::value::string(*strValuePtr);
+      obj["value"] = json::value::string(strValue);
       response.set_status_code(HTTP_SUCCESS);
       response.set_body(obj);
    }
@@ -111,9 +112,8 @@ void handle_put(http_request request) {
    string PUTRequestType = requestKeywords[0];
    if (PUTRequestType == "key" && requestKeywords.size() >= 3) {
       string key = requestKeywords[1];
-      const string val = requestKeywords[2];
-      auto blobValue = static_cast<Cache::val_type>(&val);
-      int status = serverCache->set(key, blobValue, sizeof(val));
+      string val = requestKeywords[2];
+      int status = serverCache->set(key, val.c_str(), val.size() + 1);
       if (status == 0) {
          response.set_status_code(HTTP_SUCCESS_NO_CONTENT);
          request.reply(response);
@@ -193,7 +193,7 @@ void handle_post(http_request request) {
       
    } else {
       response.set_status_code(HTTP_CLIENT_ERROR_BAD_REQUEST);
-      response.set_body("Invalid POST Request:   Please shut down the server with /shutdown.");
+      response.set_body("Invalid POST Request: Please shut down the server with /shutdown.");
       request.reply(response);
    }
 }

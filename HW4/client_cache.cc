@@ -36,7 +36,11 @@ public:
         
     }
 
-    ~Impl(){}
+    ~Impl(){
+        auto path = "/shutdown";
+        uri_builder builder(path);
+        client.request(methods::POST, builder.to_string()).get();
+    }
 
     int set(key_type key, val_type val, index_type size){
         const string *strPtr = static_cast<const string*>(val);
@@ -67,12 +71,13 @@ public:
         if (status_code == HTTP_SUCCESS) {
             auto json = response.extract_json().get();
             string jsonStr = json["value"].as_string();
-            val_size = sizeof(jsonStr);
+            val_size = jsonStr.size();
 
-            val_type copy = new char[sizeof(jsonStr)+1];
-            memcpy((void*)copy, jsonStr.c_str(), sizeof(jsonStr)+1);
+            val_type copy = new char[jsonStr.size()+1];
+            memcpy((void*)copy, jsonStr.c_str(), jsonStr.size()+1);
             return copy;
         } else {
+            cout<< "not here!" << endl;
             string message = response.extract_string().get();
             cout << message << endl;
             return nullptr;
@@ -125,7 +130,7 @@ int Cache::set(key_type key, val_type val, index_type size){
 }
 
 // Retrieve a pointer to the value associated with key in the cache,
-// or NULL if not found.
+// or nullptr if not found.
 // Sets the actual size of the returned value (in bytes) in val_size
 Cache::val_type Cache::get(key_type key, index_type& val_size) const {
     return pImpl_->get(key,val_size);

@@ -130,7 +130,7 @@ int Cache::set(key_type key, val_type val, index_type size){
 }
 
 // Retrieve a pointer to the value associated with key in the cache,
-// or NULL if not found.
+// or nullptr if not found.
 // Sets the actual size of the returned value (in bytes) in val_size
 Cache::val_type Cache::get(key_type key, index_type& val_size) const {
     return pImpl_->get(key,val_size);
