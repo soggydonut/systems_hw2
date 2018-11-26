@@ -4,27 +4,27 @@
 ## Description
 This project was undertaken for the "CSCI389 - Computer Systems" class at Reed College in the Fall 2018 semester, in which we write a look-aside cache with key-value storage, and progressively add capabilities along the way.
 
-## HW2 and 3
+## HW5
+### Jain's Ten Steps
+#### 1) Goals & Definition of System Boundaries
 
-### Performance (HW2 Part 3)
-The hash function is implemented as follows:
-- Split the string key into an array of characters.
-- Iterate over the array and take the product of the prime numbers that correspond to each ASCII char.
-   (e.g. 'C' is 67th on the ASCII table, and the 67th prime is 317).
-- Once we have the product, return it as the bucket number to store value associated with the key.
-Since any given integer is a product of primes, the only K-V pairs sharing the same bucket would be those whose keys are permutations of each other.
+#### 2) System Services & Possible Outcomes
 
-### Collision Resolution (HW2 Part 4)
-Taken care of by unordered_map.
+#### 3) Performance Metrics
 
-### Dynamic Resizing (HW2 Part 5)
-Implemented in the cache constructor, using unordered_map.
+#### 4) System & Workload Parameters
 
-### Eviction Policy (HW2 Part 6)
-Implemented FIFO in cache::set.
+#### 5) Factors & Their Values
 
-### Test (HW3)
-For HW3, we developed unit tests and ran them on our code as well as code from three other groups. Test results were uploaded to Moodle.
+#### 6) Evaluation Techniques
+
+#### 7) Workload Selection
+
+#### 8) Experiment Design
+
+#### 9) Data Analysis & Interpretation
+
+#### 10) Results Presentation
 
 ## HW4
 In HW4 we modified the cache so that it could be accessed using RESTful API over a network. To support this functionality we used [C++ REST SDK](https://github.com/Microsoft/cpprestsdk) (make sure to install this and run it with the appropriate linkers!).
@@ -48,3 +48,25 @@ Currently client_cache shuts down the cache in the Impl destructor, and we are n
 
 ### Acknowledgements
 We would like to thank Jillian James & Marika Swanberg for allowing us to use their Cache code (from HW4 onwards).
+
+## HW2 and 3
+
+### Performance (HW2 Part 3)
+The hash function is implemented as follows:
+- Split the string key into an array of characters.
+- Iterate over the array and take the product of the prime numbers that correspond to each ASCII char.
+   (e.g. 'C' is 67th on the ASCII table, and the 67th prime is 317).
+- Once we have the product, return it as the bucket number to store value associated with the key.
+Since any given integer is a product of primes, the only K-V pairs sharing the same bucket would be those whose keys are permutations of each other.
+
+### Collision Resolution (HW2 Part 4)
+Taken care of by unordered_map.
+
+### Dynamic Resizing (HW2 Part 5)
+Implemented in the cache constructor, using unordered_map.
+
+### Eviction Policy (HW2 Part 6)
+Implemented FIFO in cache::set.
+
+### Test (HW3)
+For HW3, we developed unit tests and ran them on our code as well as code from three other groups. Test results were uploaded to Moodle.
