@@ -7,10 +7,14 @@ This project was undertaken for the "CSCI389 - Computer Systems" class at Reed C
 ## HW5
 ### Jain's Ten Steps
 #### 1) Goals & Definition of System Boundaries
+##### The goal of this benchmark effort is to determine the impact of both the volume of cache requests and the space used in the cache on the response time (in milliseconds). The cache in question is the one we have developed as of HW4, where a client interacts with the Client Cache API (in ```client_cache.cc```) that makes calls to a Server (in ```server.cc```), which in turn stores keys and values in its Backing Store (in ```server_cache.cc```). With the goals and the basic outline of the system in mind, our system boundaries include all the aforementioned components that comprise our Cache, internal to the system we have created.
+
 
 #### 2) System Services & Possible Outcomes
 
 #### 3) Performance Metrics
+##### (i) **Sustained Throughput**, defined as the maximum offered load (in requests per second) at which the mean response time remains under 1 millisecond.
+##### (ii) ****
 
 #### 4) System & Workload Parameters
 
