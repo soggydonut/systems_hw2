@@ -12,16 +12,12 @@ The goal of this benchmark effort is to determine the impact of both the volume 
 #### II. System Services & Possible Outcomes
 ##### Our Cache has the following system services (with outcomes described for each service):
 1. ```Cache::get```
-
   * If the get query is successful, this service retrieves a value from the Cache based on the associated key (as input by the user), and also returns the size of that value. If it is unsuccessful, it will simply return a nullptr (with size 0).
 2. ```Cache::set```
-
   * A successful set query will add a key-value pair to the Cache, overwriting the old value if the key already exists and evicting (using FIFO) an old value if the new addition causes the maximum memory to be exceeded. If it is unsuccessful, it will simply do nothing and return a nonzero value.
 3. ```Cache::del```
-
   * A successful delete query removes a key-value pair, if it is in the cache. If it does not exist or some other error occurs, it will do nothing and return zero.
 4. ```Cache::space_used```
-
   * This query returns the current amount of memory being used, which is the only possible outcome.
 
 #### III. Performance Metrics
