@@ -6,37 +6,37 @@ This project was undertaken for the "CSCI389 - Computer Systems" class at Reed C
 
 ## HW5
 ### Jain's Ten Steps
-#### 1. Goals & Definition of System Boundaries
+#### I. Goals & Definition of System Boundaries
 The goal of this benchmark effort is to determine the impact of both the volume of Cache requests (stress) and the space used in the Cache (load) on the response time (in milliseconds). The Cache in question is the one we have developed as of HW4, where a client interacts with the Client Cache API (in ```client_cache.cc```) that makes calls to a Server (in ```server.cc```), which in turn stores keys and values in its Backing Store (in ```server_cache.cc```). With the goals and the basic outline of the system in mind, our system boundaries include all the aforementioned components that comprise our Cache, internal to the system we have created.
 
-#### 2. System Services & Possible Outcomes
+#### II. System Services & Possible Outcomes
 ##### Our Cache has the following system services (with outcomes described for each service):
-i. ```Cache::get```
+1. ```Cache::get```
 ..* If the get query is successful, this service retrieves a value from the Cache based on the associated key (as input by the user), and also returns the size of that value. If it is unsuccessful, it will simply return a nullptr (with size 0).
-ii. ```Cache::set```
+2. ```Cache::set```
 ..* A successful set query will add a key-value pair to the Cache, overwriting the old value if the key already exists and evicting (using FIFO) an old value if the new addition causes the maximum memory to be exceeded. If it is unsuccessful, it will simply do nothing and return a nonzero value.
-iii. ```Cache::del```
+3. ```Cache::del```
 ..* A successful delete query removes a key-value pair, if it is in the cache. If it does not exist or some other error occurs, it will do nothing and return zero.
-iv. ```Cache::space_used```
+4. ```Cache::space_used```
 ..* This query returns the current amount of memory being used, which is the only possible outcome.
 
-#### 3. Performance Metrics
-i. **Sustained Throughput**, defined (by Eitan) as the maximum offered load (in requests per second) at which the mean response time remains under 1 millisecond.
-ii. **Load Testing**: We want to test the impact of spaced used in the Cache on the speed of response times for GET. GET was chosen because it is crucial method that does not increase or decrease the space used in itself and thus we can effectively and independently measure how the space used effects its speed.
+#### III. Performance Metrics
+1. **Sustained Throughput**, defined (by Eitan) as the maximum offered load (in requests per second) at which the mean response time remains under 1 millisecond.
+2. **Load Testing**: We want to test the impact of spaced used in the Cache on the speed of response times for GET. GET was chosen because it is crucial method that does not increase or decrease the space used in itself and thus we can effectively and independently measure how the space used effects its speed.
 
-#### 4. System & Workload Parameters
+#### IV. System & Workload Parameters
 
-#### 5. Factors & Their Values
+#### V. Factors & Their Values
 
-#### 6. Evaluation Techniques
+#### VI. Evaluation Techniques
 
-#### 7. Workload Selection
+#### VII. Workload Selection
 
-#### 8. Experiment Design
+#### VIII. Experiment Design
 
-#### 9. Data Analysis & Interpretation
+#### IX. Data Analysis & Interpretation
 
-#### 10. Results Presentation
+#### X. Results Presentation
 
 ## HW4
 In HW4 we modified the Cache so that it could be accessed using RESTful API over a network. To support this functionality we used [C++ REST SDK](https://github.com/Microsoft/cpprestsdk) (make sure to install this and run it with the appropriate linkers!).
