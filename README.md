@@ -22,21 +22,57 @@ The goal of this benchmark effort is to determine the impact of both the volume 
 
 #### III. Performance Metrics
 1. **Sustained Throughput**, defined (by Eitan) as the maximum offered load (in requests per second) at which the mean response time remains under 1 millisecond.
-2. **Load Testing**: We want to test the impact of spaced used in the Cache on the speed of response times for GET. GET was chosen because it is crucial method that does not increase or decrease the space used in itself and thus we can effectively and independently measure how the space used effects its speed.
+2. **Load Testing**: We want to test the impact of spaced used in the Cache on the speed of response times for GET. GET was chosen because it is a crucial method that does not increase or decrease the space used in itself and thus we can effectively and independently measure how the space used affects its speed.
 
 #### IV. System & Workload Parameters
+* System Parameters
+  * System Processor:        2.6 GHz Intel Core i5
+  * System Memory:           8 GB 1600 MHz DDR3
+  * Virtual Machine (Linux): VirtualBox Ubuntu 64-bit
+* Workload Parameters
+  * Volume of User requests
+  * Cache Space Used
 
 #### V. Factors & Their Values
+* Volume of User Requests
+  * We varied this from 1 to 2^17 requests per second.
+* Cache Space Used
+  * We varied this from 1 to 2^17 items in the Cache.
+
+These values were selected because we could see a natural progression by 'doubling' each next value.
 
 #### VI. Evaluation Techniques
+The evaluation technique we are using is **Simulation**, since we are not testing with "real" users.
 
 #### VII. Workload Selection
+We have the following workload choice for our Sustained Throughput metric:
+* 70% GETs
+* 29% DELs
+* 1%  SETs
+
+This was to mimic the ETC workload in the memcached paper.
 
 #### VIII. Experiment Design
+* Sustained Throughput
+    * For this test, we varied the requests per second as described in Part V. For each load (requests per second), we inverted it to obtain the number of milliseconds to run per query. Then we would pick a query with probability based on the workload in VII, and run it. Any 'extra time' would be waited for, before repeating the experiment. Code can be seen in ```benchmark.cc```.
+* Load Testing
+    * For this test, we varied the number of items in the Cache as described in Part V. For each amount, we would perform 1000 GETs, and see how long it took per request. Code can be seen in ```benchmark.cc```.
+
+For each test, data was extracted and plotted using gnuplot.
 
 #### IX. Data Analysis & Interpretation
+This part was quite suprising!
+* For ** Sustained Throughput**, we noticed that contrary to what we thought, the mean response time was initially very large (much more than 1ms), but quickly dropped to values far lower than one for higher load. Initially it was expected that the reverse would be true, but looking at the data it would appear that some overhead is overcome on average by making many calls instead of few.
+* For our **Load Test**, we were also surprised to see that average response time remained static at around 44ms no matter how many values were in the Cache. As such, it seems we can conclude that the number of items in the Cache does not affect average response time, but we are unsure if maybe there are other factors at work here.
 
 #### X. Results Presentation
+Results are presented in the following data and graph files:
+* Sustained Throughput
+    * ```st_data.csv```
+    * ```sus_tp.gif```
+* Load Testing
+    * ```lt_data.csv```
+    * ```load_test.gif```
 
 ## HW4
 In HW4 we modified the Cache so that it could be accessed using RESTful API over a network. To support this functionality we used [C++ REST SDK](https://github.com/Microsoft/cpprestsdk) (make sure to install this and run it with the appropriate linkers!).
@@ -44,13 +80,13 @@ Currently, we do not support the client and server running on different machines
 
 ### 'Server Terminal':
 #### To compile:
-```g++ -g -O3 -Wextra -pedantic -Wall --std=c++14 -o server server_Cache.cc server.cc -lboost_system -lcrypto -lssl -lcpprest```
+```g++ -g -O3 -Wextra -pedantic -Wall --std=c++14 -o server server_cache.cc server.cc -lboost_system -lcrypto -lssl -lcpprest```
 #### To run:
 ```./server -m maxmem -t portnum```
 
 ### 'Client Terminal':
 #### To compile:
-```g++ -g -O3 -Wextra -pedantic -Wall --std=c++14 -o client client_Cache.cc client_test.cc -lboost_system -lcrypto -lssl -lcpprest```
+```g++ -g -O3 -Wextra -pedantic -Wall --std=c++14 -o client client_cache.cc client_test.cc -lboost_system -lcrypto -lssl -lcpprest```
 #### To run:
 ```./client```
 
