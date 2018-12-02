@@ -5,6 +5,7 @@
 This project was undertaken for the "CSCI389 - Computer Systems" class at Reed College in the Fall 2018 semester, in which we write a look-aside Cache with key-value storage, and progressively add capabilities along the way.
 
 ## HW5
+###### (note: extension granted by Eitan until Sat, 1 Dec!)
 ### Jain's Ten Steps
 #### I. Goals & Definition of System Boundaries
 The goal of this benchmark effort is to determine the impact of both the volume of Cache requests (stress) and the space used in the Cache (load) on the response time (in milliseconds). The Cache in question is the one we have developed as of HW4, where a client interacts with the Client Cache API (in ```client_cache.cc```) that makes calls to a Server (in ```server.cc```), which in turn stores keys and values in its Backing Store (in ```server_cache.cc```). With the goals and the basic outline of the system in mind, our system boundaries include all the aforementioned components that comprise our Cache, internal to the system we have created.
@@ -53,16 +54,16 @@ We have the following workload choice for our Sustained Throughput metric:
 This was to mimic the ETC workload in the memcached paper.
 
 #### VIII. Experiment Design
-* Sustained Throughput
+* **Sustained Throughput**
     * For this test, we varied the requests per second as described in Part V. For each load (requests per second), we inverted it to obtain the number of milliseconds to run per query. Then we would pick a query with probability based on the workload in VII, and run it. Any 'extra time' would be waited for, before repeating the experiment. Code can be seen in ```benchmark.cc```.
-* Load Testing
+* **Load Testing**
     * For this test, we varied the number of items in the Cache as described in Part V. For each amount, we would perform 1000 GETs, and see how long it took per request. Code can be seen in ```benchmark.cc```.
 
 For each test, data was extracted and plotted using gnuplot.
 
 #### IX. Data Analysis & Interpretation
 This part was quite suprising!
-* For ** Sustained Throughput**, we noticed that contrary to what we thought, the mean response time was initially very large (much more than 1ms), but quickly dropped to values far lower than one for higher load. Initially it was expected that the reverse would be true, but looking at the data it would appear that some overhead is overcome on average by making many calls instead of few.
+* For **Sustained Throughput**, we noticed that contrary to what we thought, the mean response time was initially very large (much more than 1ms), but quickly dropped to values far lower than one for higher load. Initially it was expected that the reverse would be true, but looking at the data it would appear that some overhead is overcome on average by making many calls instead of few.
 * For our **Load Test**, we were also surprised to see that average response time remained static at around 44ms no matter how many values were in the Cache. As such, it seems we can conclude that the number of items in the Cache does not affect average response time, but we are unsure if maybe there are other factors at work here.
 
 #### X. Results Presentation
